@@ -1,11 +1,19 @@
-from sklearn import tree
+from sklearn import tree, neighbors, svm, naive_bayes, metrics
 
-clf = tree.DecisionTreeClassifier()
+# Classifiers
+classifiers = [
+    tree.DecisionTreeClassifier(),
+    neighbors.KNeighborsClassifier(),
+    svm.SVC(),
+    naive_bayes.GaussianNB(),
+]
 
-# CHALLENGE - create 3 more classifiers...
-# 1
-# 2
-# 3
+clf_names = [
+    'decision_tree',
+    'k_neighbors',
+    'svc',
+    'gaussian_naive_bayes'
+]
 
 # [height, weight, shoe_size]
 X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37], [166, 65, 40],
@@ -15,12 +23,20 @@ X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37], [166, 65, 40],
 Y = ['male', 'male', 'female', 'female', 'male', 'male', 'female', 'female',
      'female', 'male', 'male']
 
-
 # CHALLENGE - ...and train them on our data
-clf = clf.fit(X, Y)
 
-prediction = clf.predict([[190, 70, 43]])
+for i in range(len(classifiers)):
+    classifiers[i] = classifiers[i].fit(X, Y)
 
-# CHALLENGE compare their reusults and print the best one!
+# Predictions
 
-print(prediction)
+for i in range(len(classifiers)):
+    pred = []
+    for data in X:
+        pred.append(classifiers[i].predict([data]))
+
+    print(f"Accuracy of {clf_names[i]}: {metrics.accuracy_score(Y, pred)}")
+
+# CHALLENGE compare their results and print the best one!
+
+
