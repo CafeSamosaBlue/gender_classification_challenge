@@ -29,13 +29,14 @@ for i in range(len(classifiers)):
     classifiers[i] = classifiers[i].fit(X, Y)
 
 # Predictions
+clf_to_pred = {}
 
 for i in range(len(classifiers)):
-    pred = []
-    for data in X:
-        pred.append(classifiers[i].predict([data]))
-
-    print(f"Accuracy of {clf_names[i]}: {metrics.accuracy_score(Y, pred)}")
+    pred = classifiers[i].predict(X)
+    clf_to_pred[clf_names[i]] = metrics.accuracy_score(Y, pred)
 
 # CHALLENGE compare their results and print the best one!
+
+print(max(clf_to_pred, key=lambda key: clf_to_pred[key]))
+
 
